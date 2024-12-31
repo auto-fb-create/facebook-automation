@@ -1,5 +1,12 @@
 {
-    "email": "your-email@example.com",
-    "password": "your-strong-password",
-    "api_key": "your-api-key-here"
+  "facebook": {
+    "email": "your_email@example.com",
+    "password": "your_secure_password",
+    "proxy": "proxy_address_if_needed"
+  },
+  "temp_email_service": {
+    "api_url": "https://www.1secmail.com/api/v1",
+    "login": "demo",
+    "domain": "1secmail.com"
+  }
 }
