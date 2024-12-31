@@ -6,15 +6,26 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-# TempMail API থেকে একটি টেম্পোরারি ইমেইল সংগ্রহ করা
-def get_temp_email():
-    response = requests.get("https://api.tempmail.io/api/v1/email/new")
-    email = response.json()['data']['email']
-    return email
+import requests
 
-# একটি টেম্পোরারি ইমেইল পাওয়া
+def get_temp_email():
+    # 1secmail API ব্যবহার করে নতুন টেম্পোরারি ইমেইল তৈরি
+    login = "demo"  # এখানে আপনার পছন্দের লগিন ব্যবহার করতে পারেন
+    domain = "1secmail.com"  # 1secmail.com ডোমেইন ব্যবহার হচ্ছে
+    url = f"https://www.1secmail.com/api/v1/?action=genRandomMailbox&login={login}&domain={domain}"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        email = response.json()['email']
+        return email
+    else:
+        print("Error generating temp email")
+        return None
+
+# টেম্পোরারি ইমেইল তৈরি করা এবং প্রিন্ট করা
 temp_email = get_temp_email()
-print(f"Generated Temp Email: {temp_email}")
+print(f"Your temporary email: {temp_email}")
 
 # Facebook সাইন-আপ URL
 facebook_url = "https://www.facebook.com/r.php"
