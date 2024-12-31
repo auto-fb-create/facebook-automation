@@ -51,7 +51,30 @@ email_field.send_keys(temp_email)
 
 email_confirm = driver.find_element(By.NAME, "reg_email_confirmation__")
 email_confirm.send_keys(temp_email)
+def get_messages():
+    # 1secmail API ব্যবহার করে টেম্পোরারি ইমেইল মেসেজ পড়া
+    login = "demo"  # একই লগিন ব্যবহার করুন
+    domain = "1secmail.com"  # 1secmail.com ডোমেইন ব্যবহার হচ্ছে
+    url = f"https://www.1secmail.com/api/v1/?action=getMessages&login={login}&domain={domain}"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        messages = response.json()
+        if messages:
+            for msg in messages:
+                print(f"Message ID: {msg['id']}")
+                print(f"From: {msg['from']}")
+                print(f"Subject: {msg['subject']}")
+                print(f"Date: {msg['date']}")
+                print(f"Body: {msg['textBody']}\n")
+        else:
+            print("No messages found.")
+    else:
+        print("Error fetching messages")
 
+# মেসেজগুলো প্রিন্ট করা
+get_messages()
 password = driver.find_element(By.NAME, "reg_passwd__")
 password.send_keys("securepassword123")
 
