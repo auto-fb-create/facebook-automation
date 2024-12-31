@@ -1,25 +1,20 @@
 import requests
 import json
 
-# config.json থেকে কনফিগারেশন লোড করা
-with open('config.json') as config_file:
-    config = json.load(config_file)
-
 def get_temp_email():
-    # 1secmail API ব্যবহার করে নতুন টেম্পোরারি ইমেইল তৈরি
-    login = config['temp_email_service']['login']
-    domain = config['temp_email_service']['domain']
-    url = f"{config['temp_email_service']['api_url']}?action=genRandomMailbox&login={login}&domain={domain}"
+    config = json.load(open('config.json'))
+    login = config["temp_email"]
+    domain = config["domain"]
+    
+    url = f"https://www.1secmail.com/api/v1/?action=genRandomMailbox&login={login}&domain={domain}"
     
     response = requests.get(url)
     
     if response.status_code == 200:
-        # JSON রেসপন্স চেক করা
         json_data = response.json()
         
         if isinstance(json_data, list) and len(json_data) > 0:
-            email = json_data[0]['email']
-            return email
+            return json_data[0]
         else:
             print("Error: No email returned in response")
             return None
@@ -27,6 +22,29 @@ def get_temp_email():
         print("Error generating temp email")
         return None
 
-# টেম্পোরারি ইমেইল তৈরি করা এবং প্রিন্ট করা
-temp_email = get_temp_email()
-print(f"Your temporary email: {temp_email}")
+def create_facebook_account():
+    config = json.load(open('config.json'))
+    temp_email = get_temp_email()
+    
+    if temp_email:
+        facebook_url = config["facebook_signup_url"]
+        data = {
+            "first_name": config["facebook_data"]["first_name"],
+            "last_name": config["facebook_data"]["last_name"],
+            "email": temp_email,
+            "password": config["facebook_data"]["password"],
+            "dob": config["facebook_data"]["dob"],
+            "gender": config["facebook_data"]["gender"]
+        }
+        
+        response = requests.post(facebook_url, data=data)
+        
+        if response.status_code == 200:
+            print("Account successfully created!")
+        else:
+            print("Failed to create account.")
+    else:
+        print("Failed to get a temporary email.")
+
+if __name__ == "__main__":
+    create_facebook_account()
