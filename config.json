@@ -1,12 +1,14 @@
+### ৩. `config.json`
+```json
 {
-  "facebook": {
-    "email": "your_email@example.com",
-    "password": "your_secure_password",
-    "proxy": "proxy_address_if_needed"
-  },
-  "temp_email_service": {
-    "api_url": "https://www.1secmail.com/api/v1",
-    "login": "demo",
-    "domain": "1secmail.com"
+  "temp_email": "demo",
+  "domain": "1secmail.com",
+  "facebook_signup_url": "https://www.facebook.com/r.php",
+  "facebook_data": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "password": "your_password_here",
+    "dob": "01/01/1990",
+    "gender": "male"
   }
 }
