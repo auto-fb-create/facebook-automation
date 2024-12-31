@@ -1,2 +1,21 @@
-# Ignore config.json to protect sensitive information
+# Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+
+# Config file (contains sensitive information)
 config.json
+
+# IDE settings
+.vscode/
+.idea/
+
+# Other temporary files
+*.log
+*.bak
+*.swp
